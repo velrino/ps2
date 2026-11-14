@@ -1,0 +1,11 @@
+# This checkout also stores local emulator files. Track only documentation
+# and memory card images; keep applications, BIOS, games and caches local.
+/*
+!/.gitignore
+!/README.md
+!/saves/
+
+/saves/*
+!/saves/*.ps2
+
+.DS_Store

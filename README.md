@@ -1,69 +1,46 @@
-# PS2 Saves for PCSX2
+# PS2 Saves
 
-## Structure
+PCSX2 memory card backups maintained in [velrino/ps2-saves](https://github.com/velrino/ps2-saves).
 
+## Memory cards
+
+All versioned memory card images live in `saves/`.
+
+| File | Game | Save ID |
+|------|------|---------|
+| `Burnout3-USA.ps2` | Burnout 3: Takedown | `BASLUS-21050` |
+| `MortalKombat-ShaolinMonks-USA.ps2` | Mortal Kombat: Shaolin Monks | `BASLUS-21087` |
+| `NFS-Carbon-USA.ps2` | Need for Speed: Carbon | `BASLUS-21494` |
+| `NFS-MostWanted-USA.ps2` | Need for Speed: Most Wanted | `BASLUS-21351` |
+| `NFS-Underground2-USA.ps2` | Need for Speed: Underground 2 | `BASLUS-21065` |
+
+The cards were moved from the repository root without changing their contents.
+
+## Use with PCSX2
+
+The local save folder is:
+
+```text
+/Users/velrino/Documents/Projects/ps2/saves
 ```
-saves/
-├── Burnout3-USA.ps2                    (BASLUS-21050)
-├── NFS-MostWanted-USA.ps2              (BASLUS-21351)
-├── NFS-Carbon-USA.ps2                  (BASLUS-21494)
-├── NFS-Underground2-USA.ps2            (BASLUS-21065)
-├── MortalKombat-ShaolinMonks-USA.ps2   (BASLUS-21087)
-└── ...
-```
 
-## How to add new saves
+In PCSX2, open **Settings → Memory Cards**, choose this folder and assign the
+appropriate card to a slot. Use a card that matches the game's region.
+Changing the folder does not migrate cards from PCSX2's previous folder;
+back up existing progress before switching cards.
 
-### 1. Download saves
+## Back up changes
 
-- **GameFAQs**: https://gamefaqs.gamespot.com (search for game → Saves)
-- **PS2-HOME**: https://www.ps2-home.com/forum/viewtopic.php?t=14285
-
-Supported formats: `.psu`, `.max`, `.psv`, `.cbs`, `.xps`, `.sps`
-
-### 2. Install mymcplus (only once)
+Close PCSX2 before copying or committing cards so they are no longer being written.
+Place memory card images in `saves/`, then review and commit only the intended files:
 
 ```bash
-cd /Users/velrino/Documents/ps2/saves
-python3 -m venv venv
-source venv/bin/activate
-pip install mymcplus
+git status --short
+git add saves/GameName-USA.ps2
+git diff --cached --stat
+git commit -m "Update GameName memory card"
 ```
 
-### 3. Create memory card and import save
-
-```bash
-source venv/bin/activate
-python -m mymcplus GameName-USA.ps2 format
-python -m mymcplus GameName-USA.ps2 import /path/to/save.psu
-python -m mymcplus GameName-USA.ps2 dir  # verify
-```
-
-### 4. In PCSX2
-
-1. Settings → Memory Cards
-2. Folder: `/Users/velrino/Documents/ps2/saves`
-3. Select the `.ps2` file for the game in Slot 1
-
-## Regions
-
-**The save must be from the same region as the game!**
-
-| Code | Region |
-|------|--------|
-| SLUS / BASLUS | USA (NTSC-U) |
-| SLES / BESLES | Europe (PAL) |
-| SLPM | Japan (NTSC-J) |
-
-## Useful commands
-
-```bash
-# List saves on memory card
-python -m mymcplus Game.ps2 dir
-
-# Export save
-python -m mymcplus Game.ps2 export BASLUS-XXXXX save.psu
-
-# Delete save
-python -m mymcplus Game.ps2 delete BASLUS-XXXXX
-```
+The ignore rules allow only this README, `.gitignore` and `saves/*.ps2`.
+The PCSX2 application, downloaded installers, BIOS, games, save states, logs,
+caches and macOS metadata stay local and are not included in new commits.
