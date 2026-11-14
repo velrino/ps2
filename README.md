@@ -1,6 +1,6 @@
 # PS2 Saves
 
-PCSX2 memory card backups maintained in [velrino/ps2-saves](https://github.com/velrino/ps2-saves).
+PCSX2 memory card backups maintained in [velrino/ps2](https://github.com/velrino/ps2).
 
 ## Memory cards
 
